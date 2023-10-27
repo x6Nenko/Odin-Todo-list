@@ -21,9 +21,9 @@ class TodoItem {
 
 const todoItemList = [{name: "default project", tasks: []}, {name: "Another project", tasks: []}, {name: "Superior project", tasks: []}];
 
-const submitFormBtn = document.getElementById("submitFormBtn");
-submitFormBtn.addEventListener("click", function() {
-    const form = document.getElementById("myForm");
+const form = document.getElementById("myForm");
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
     const formData = new FormData(form);
 
     const title = formData.get("title");
@@ -31,7 +31,6 @@ submitFormBtn.addEventListener("click", function() {
     const dueData = formData.get("dueData");
     const priority = formData.get("priority");
     const projectIndex = findActiveProject();
-    console.log(projectIndex);
 
     new TodoItem(title, description, dueData, priority, projectIndex);
     

@@ -14,7 +14,7 @@
         <form action="" id="myForm">
             <div class="input-container">
                 <label for="title">Title:</label>
-                <input type="text" id="title" name="title">
+                <input type="text" id="title" name="title" required>
             </div>
 
             <div class="input-container">
@@ -24,15 +24,30 @@
 
             <div class="input-container">
                 <label for="dueData">Due Data:</label>
-                <input type="text" id="dueData" name="dueData">
+                <input type="date" id="dueData" name="dueData">
             </div>
 
             <div class="input-container">
-                <label for="priority">Priority:</label>
-                <input type="text" id="priority" name="priority">
+                <label for="priority" >Priority:</label>
+                <div>
+                    <div>
+                      <input type="radio" id="low" name="priority" value="low" />
+                      <label for="low">Low</label>
+                    </div>
+                  
+                    <div>
+                      <input type="radio" id="middle" name="priority" value="middle" checked />
+                      <label for="middle">Middle</label>
+                    </div>
+                  
+                    <div>
+                      <input type="radio" id="high" name="priority" value="high" />
+                      <label for="high">High</label>
+                    </div>
+                  </div>
             </div>
+            <button type="submit">Add</button>
         </form>
-        <button id="submitFormBtn">Add</button>
     </div>
 
     <div class="project-container">

@@ -82,7 +82,8 @@ function unsetUnactiveProjects() {
     });
 };
 
-// Get todo form into normal conditions
+// Get todo form into normal conditions +
+// Make title input required and make a tip +
 // expand a single todo to see/edit its details
 // delete a todo
 // localstorage
