@@ -1,4 +1,4 @@
-import {renderNewTodoItem, renderProjects} from "./dom.js";
+import {renderNewTodoItem, renderProjects, renderTodosForSelectedProject} from "./dom.js";
 
 class TodoItem {
 
@@ -10,14 +10,12 @@ class TodoItem {
         //todoItemList[projectIndex].tasks.push(this);
         todoItemList[projectIndex].tasks.push(this);
         renderNewTodoItem(todoItemList);
-        console.log(todoItemList);
-    }
+    };
 
     showItem() {
         console.log(this);
-    }
-
-}
+    };
+};
 
 const todoItemList = [{name: "default project", tasks: []}, {name: "Another project", tasks: []}, {name: "Superior project", tasks: []}];
 
@@ -50,6 +48,23 @@ export function findActiveProject() {
     });
     return activeProjectIndex;
 };
+
+function initialTodos() {
+    new TodoItem("Random Title", "Some random description", "2023-10-28", "Middle", 0);
+    new TodoItem("Title", "Some random description", "2023-10-28", "High", 0);
+    new TodoItem("Random", "Some random description", "2023-10-28", "Middle", 0);
+    new TodoItem("Titleee", "Some random description", "2023-10-28", "Low", 1);
+    new TodoItem("Titleee 123 ", "Some random description", "2023-10-28", "High", 2);
+    new TodoItem("Titleee dasadsadsa", "Some random description", "2023-10-28", "High", 2);
+    new TodoItem("TI", "Some random description", "2023-10-28", "Low", 2);
+    new TodoItem("Titleee Yods", "Some random description", "2023-10-28", "Middle", 2);
+    renderTodosForSelectedProject();
+};
+
+const initialTodosBtn = document.getElementById("initialTodosBtn");
+initialTodosBtn.addEventListener("click", function() {
+    initialTodos();
+});
 
 // in object > this ?
 renderProjects(todoItemList);

@@ -9,6 +9,7 @@
 <body>
     <h1>Todo list</h1>
     <button id="openFormBtn">Add an item</button>
+    <button id="initialTodosBtn">Add initial Todos</button>
 
     <div class="form-container">
         <form action="" id="myForm">
@@ -54,17 +55,19 @@
     </div>
 
     <div class="todos-container">
-        <article class="todo-item">
-            <div class="todo-info">
-                <h2>Title</h2>
-                <p>Description</p>
-            </div>
-
-            <div class="todo-extrainfo">
-                <p>Due data</p>
-                <p>Priority</p>
-            </div>
-        </article>
+        <div class="info-modal">
+            <article>
+                <div>
+                    <h2 class="modal-header">Random</h2>
+                    <p class="modal-description">Some random description</p>
+                </div>
+                <div>
+                    <p class="modal-dueData">2023-10-28</p>
+                    <p class="modal-priority">Middle</p>
+                </div>
+                <span id="closeModalBtn">&times;</span>
+            </article>
+        </div>
     </div>
 
     <script type="module" src="index.js"></script>
