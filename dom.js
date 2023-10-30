@@ -6,6 +6,20 @@ openFormBtn.addEventListener("click", function() {
     formContainer.style.display = "block";
 });
 
+
+
+// UTILS =====>
+
+function destructureUniqueId(uniqueId) {
+    return uniqueId.split("-");
+};
+
+// <===== UTILS
+
+
+
+// MODALS =====>
+
 function provideModalForTodoItem(uniqueId) {
     const todoItem = document.getElementById(uniqueId);
     const infoModal = document.querySelector(".info-modal");
@@ -13,10 +27,6 @@ function provideModalForTodoItem(uniqueId) {
 
     openModal(todoItem, infoModal, uniqueId);
     closeModal(infoModal, closeModalBtn);
-};
-
-function destructureUniqueId(uniqueId) {
-    return uniqueId.split("-");
 };
 
 function loadTodoInfoIntoModal(uniqueId) {
@@ -28,17 +38,72 @@ function loadTodoInfoIntoModal(uniqueId) {
     const modalHeader = document.querySelector(".modal-header");
     const modalDescription = document.querySelector(".modal-description");
     const modalDueData = document.querySelector(".modal-dueData");
-    const modalPriority = document.querySelector(".modal-priority");
+    const lowPriority = document.querySelector("#editLow");
+    const middlePriority = document.querySelector("#editMiddle");
+    const highPriority = document.querySelector("#editHigh");
 
     modalHeader.innerText = todoItem.title;
+    // console.log(modalDescription.innerText === "");
     modalDescription.innerText = todoItem.description;
-    modalDueData.innerText = todoItem.dueData;
-    modalPriority.innerText = todoItem.priority;
+    modalDueData.value = todoItem.dueData;
+    todoItem.priority === "low" ? lowPriority.checked = true :
+    todoItem.priority === "middle" ? middlePriority.checked = true :
+    todoItem.priority === "high" ? highPriority.checked = true : null;
+
+    listenForEdits(todoItem, modalHeader, modalDescription, modalDueData, lowPriority, middlePriority, highPriority);
+};
+
+let isEditedTodoItem = false;
+
+function checkIfItWasEdited() {
+    if (isEditedTodoItem === true) {
+        isEditedTodoItem = false;
+        return renderTodosForSelectedProject();
+    };
+
+    return null;
+};
+
+function listenForEdits(todoItem, modalHeader, modalDescription, modalDueData, lowPriority, middlePriority, highPriority) {
+    modalHeader.addEventListener("input", function() {
+        todoItem.title = modalHeader.innerText;
+        isEditedTodoItem = true;
+    });
+
+    modalDescription.addEventListener("input", function() {
+        todoItem.description = modalDescription.innerText;
+        isEditedTodoItem = true;
+    });
+
+    modalDueData.addEventListener("change", function() {
+        todoItem.dueData = modalDueData.value;
+        isEditedTodoItem = true;
+    });
+
+    lowPriority.addEventListener("change", function() {
+        if (lowPriority.checked) {
+            todoItem.priority = lowPriority.value;
+            isEditedTodoItem = true;
+        }
+    });
+
+    middlePriority.addEventListener("change", function() {
+        if (middlePriority.checked) {
+            todoItem.priority = middlePriority.value;
+            isEditedTodoItem = true;
+        }
+    });
+
+    highPriority.addEventListener("change", function() {
+        if (highPriority.checked) {
+            todoItem.priority = highPriority.value;
+            isEditedTodoItem = true;
+        }
+    });
 };
 
 function openModal(todoItem, infoModal, uniqueId) {
     todoItem.addEventListener("click", function() {
-        console.log(todoItem, infoModal);
         loadTodoInfoIntoModal(uniqueId);
         infoModal.style.display = "block";
     });
@@ -47,14 +112,20 @@ function openModal(todoItem, infoModal, uniqueId) {
 function closeModal(infoModal, closeModalBtn) {
     closeModalBtn.addEventListener("click", function() {
         infoModal.style.display = "none";
+        checkIfItWasEdited();
     });
 
     window.addEventListener("click", function(event) {
         if (event.target == infoModal) {
             infoModal.style.display = "none";
+            checkIfItWasEdited();
         }
     });
 };
+
+// <===== MODALS
+
+
 
 function createTodoDomElement(todosContainer, uniqueId, title, description, dueData, priority) {
     todosContainer.appendChild(document.createElement("article")).id = uniqueId;
@@ -135,6 +206,6 @@ function unsetUnactiveProjects() {
     });
 };
 
-// expand a single todo to see/edit its details
+// expand a single todo to see/edit its details +
 // delete a todo
 // localstorage
