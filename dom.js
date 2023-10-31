@@ -26,7 +26,7 @@ function provideModalForTodoItem(uniqueId) {
     const closeModalBtn = document.getElementById("closeModalBtn");
 
     openModal(todoItem, infoModal, uniqueId);
-    closeModal(infoModal, closeModalBtn);
+    closeModal(todoItem, infoModal, closeModalBtn);
 };
 
 function loadTodoInfoIntoModal(uniqueId) {
@@ -50,56 +50,79 @@ function loadTodoInfoIntoModal(uniqueId) {
     todoItem.priority === "middle" ? middlePriority.checked = true :
     todoItem.priority === "high" ? highPriority.checked = true : null;
 
-    listenForEdits(todoItem, modalHeader, modalDescription, modalDueData, lowPriority, middlePriority, highPriority);
+    handleEditListeners(uniqueId, todoItem, modalHeader, modalDescription, modalDueData, lowPriority, middlePriority, highPriority);
 };
 
-let isEditedTodoItem = false;
+function reRenderEditedElement(uniqueId, todoItem) {
+    const domTodoElement = document.getElementById(uniqueId);
+    const headerAndDescription = domTodoElement.querySelectorAll("div")[0];
+    const header = headerAndDescription.querySelector("h2");
+    const description = headerAndDescription.querySelector("p");
+    const dueDateAndPriority = domTodoElement.querySelectorAll("div")[1];
+    const dueData = dueDateAndPriority.querySelectorAll("p")[0];
+    const priority = dueDateAndPriority.querySelectorAll("p")[1];
 
-function checkIfItWasEdited() {
-    if (isEditedTodoItem === true) {
-        isEditedTodoItem = false;
-        return renderTodosForSelectedProject();
-    };
-
-    return null;
+    console.log(domTodoElement, todoItem);
+    header.innerText = todoItem.title;
+    description.innerText = todoItem.description;
+    dueData.innerText = todoItem.dueData;
+    priority.innerText = todoItem.priority;
 };
 
-function listenForEdits(todoItem, modalHeader, modalDescription, modalDueData, lowPriority, middlePriority, highPriority) {
+// I can change id of modal based on item id but then it will throw an errors
+function handleEditListeners(uniqueId, todoItem, modalHeader, modalDescription, modalDueData, lowPriority, middlePriority, highPriority) {
     modalHeader.addEventListener("input", function() {
         todoItem.title = modalHeader.innerText;
-        isEditedTodoItem = true;
+        reRenderEditedElement(uniqueId, todoItem);
     });
 
     modalDescription.addEventListener("input", function() {
         todoItem.description = modalDescription.innerText;
-        isEditedTodoItem = true;
+        reRenderEditedElement(uniqueId, todoItem);
     });
 
     modalDueData.addEventListener("change", function() {
         todoItem.dueData = modalDueData.value;
-        isEditedTodoItem = true;
+        reRenderEditedElement(uniqueId, todoItem);
     });
 
     lowPriority.addEventListener("change", function() {
         if (lowPriority.checked) {
             todoItem.priority = lowPriority.value;
-            isEditedTodoItem = true;
-        }
+            reRenderEditedElement(uniqueId, todoItem);
+        };
     });
 
     middlePriority.addEventListener("change", function() {
         if (middlePriority.checked) {
             todoItem.priority = middlePriority.value;
-            isEditedTodoItem = true;
-        }
+            reRenderEditedElement(uniqueId, todoItem);
+        };
     });
 
     highPriority.addEventListener("change", function() {
         if (highPriority.checked) {
             todoItem.priority = highPriority.value;
-            isEditedTodoItem = true;
-        }
+            reRenderEditedElement(uniqueId, todoItem);
+        };
     });
+};
+
+function stopListeningForPreviousTodoModule() {
+    // AbortSignal is the best option but it seems to be buggy on the ios
+    const modalHeader = document.querySelector(".modal-header");
+    const modalDescription = document.querySelector(".modal-description");
+    const modalDueData = document.querySelector(".modal-dueData");
+    const lowPriority = document.querySelector("#editLow");
+    const middlePriority = document.querySelector("#editMiddle");
+    const highPriority = document.querySelector("#editHigh");
+
+    modalHeader.replaceWith(modalHeader.cloneNode(true));
+    modalDescription.replaceWith(modalDescription.cloneNode(true));
+    modalDueData.replaceWith(modalDueData.cloneNode(true));
+    lowPriority.replaceWith(lowPriority.cloneNode(true));
+    middlePriority.replaceWith(middlePriority.cloneNode(true));
+    highPriority.replaceWith(highPriority.cloneNode(true));
 };
 
 function openModal(todoItem, infoModal, uniqueId) {
@@ -109,16 +132,16 @@ function openModal(todoItem, infoModal, uniqueId) {
     });
 };
 
-function closeModal(infoModal, closeModalBtn) {
+function closeModal(todoItem, infoModal, closeModalBtn) {
     closeModalBtn.addEventListener("click", function() {
         infoModal.style.display = "none";
-        checkIfItWasEdited();
+        stopListeningForPreviousTodoModule();
     });
 
     window.addEventListener("click", function(event) {
         if (event.target == infoModal) {
             infoModal.style.display = "none";
-            checkIfItWasEdited();
+            stopListeningForPreviousTodoModule();
         }
     });
 };
