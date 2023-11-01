@@ -1,20 +1,11 @@
-import { findActiveProject } from "./index.js";
+import { findActiveProject, removeTodo } from "./index.js";
+import { destructureUniqueId } from "./utils.js"
 
 const openFormBtn = document.getElementById("openFormBtn");
 openFormBtn.addEventListener("click", function() {
     const formContainer = document.querySelector(".form-container");
     formContainer.style.display = "block";
 });
-
-
-
-// UTILS =====>
-
-function destructureUniqueId(uniqueId) {
-    return uniqueId.split("-");
-};
-
-// <===== UTILS
 
 
 
@@ -69,7 +60,6 @@ function reRenderEditedElement(uniqueId, todoItem) {
     priority.innerText = todoItem.priority;
 };
 
-// I can change id of modal based on item id but then it will throw an errors
 function handleEditListeners(uniqueId, todoItem, modalHeader, modalDescription, modalDueData, lowPriority, middlePriority, highPriority) {
     modalHeader.addEventListener("input", function() {
         todoItem.title = modalHeader.innerText;
@@ -160,6 +150,18 @@ function createTodoDomElement(todosContainer, uniqueId, title, description, dueD
     const extraInfoDivElement = itemElement.appendChild(document.createElement("div")); 
     extraInfoDivElement.appendChild(document.createElement("p")).innerText = `${dueData}`;
     extraInfoDivElement.appendChild(document.createElement("p")).innerText = `${priority}`;
+    const buttonsContainer = itemElement.appendChild(document.createElement("div")); 
+    const removeBtn = buttonsContainer.appendChild(document.createElement("button"));
+    removeBtn.classList.add("remove-btn");
+    removeBtn.innerText = "Remove";
+    removeBtnListener(uniqueId, itemElement, removeBtn);
+};
+
+function removeBtnListener(uniqueId, itemElement, removeBtn) {
+    console.log(itemElement, removeBtn);
+    removeBtn.addEventListener("click", function() {
+        removeTodo(uniqueId);
+    });
 };
 
 let latestTodoItemListCopy = [];
@@ -229,6 +231,7 @@ function unsetUnactiveProjects() {
     });
 };
 
-// expand a single todo to see/edit its details +
-// delete a todo
+// when editing todo require a title
+// delete a todo +
 // localstorage
+// design

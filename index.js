@@ -1,4 +1,5 @@
 import {renderNewTodoItem, renderProjects, renderTodosForSelectedProject} from "./dom.js";
+import { destructureUniqueId } from "./utils.js";
 
 class TodoItem {
 
@@ -49,15 +50,23 @@ export function findActiveProject() {
     return activeProjectIndex;
 };
 
+export function removeTodo(uniqueId) {
+    const destructuredId = destructureUniqueId(uniqueId);
+    const projectId = destructuredId[0];
+    const todoItemId = destructuredId[1];
+    todoItemList[projectId].tasks.splice(todoItemId, 1);
+    renderTodosForSelectedProject();
+};
+
 function initialTodos() {
-    new TodoItem("Random Title", "Some random description", "2023-10-28", "Middle", 0);
-    new TodoItem("Title", "Some random description", "2023-10-28", "High", 0);
-    new TodoItem("Random", "Some random description", "2023-10-28", "Middle", 0);
-    new TodoItem("Titleee", "Some random description", "2023-10-28", "Low", 1);
-    new TodoItem("Titleee 123 ", "Some random description", "2023-10-28", "High", 2);
-    new TodoItem("Titleee dasadsadsa", "Some random description", "2023-10-28", "High", 2);
+    new TodoItem("Random Title", "Some random description", "2023-10-28", "middle", 0);
+    new TodoItem("Title", "Some random description", "2023-10-28", "high", 0);
+    new TodoItem("Random", "Some random description", "2023-10-28", "middle", 0);
+    new TodoItem("Titleee", "Some random description", "2023-10-28", "low", 1);
+    new TodoItem("Titleee 123 ", "Some random description", "2023-10-28", "high", 2);
+    new TodoItem("Titleee dasadsadsa", "Some random description", "2023-10-28", "high", 2);
     new TodoItem("TI", "Some random description", "2023-10-28", "Low", 2);
-    new TodoItem("Titleee Yods", "Some random description", "2023-10-28", "Middle", 2);
+    new TodoItem("Titleee Yods", "Some random description", "2023-10-28", "middle", 2);
     renderTodosForSelectedProject();
 };
 
