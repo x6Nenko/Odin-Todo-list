@@ -1,4 +1,4 @@
-import { findActiveProject, removeTodo } from "./index.js";
+import { findActiveProject, removeTodo, getUniqueIdForLatestItem } from "./index.js";
 import { destructureUniqueId } from "./utils.js"
 
 const openFormBtn = document.getElementById("openFormBtn");
@@ -116,7 +116,8 @@ function stopListeningForPreviousTodoModule() {
 };
 
 function openModal(todoItem, infoModal, uniqueId) {
-    todoItem.addEventListener("click", function() {
+    const viewEditBtn = todoItem.querySelector(".view-edit-btn");
+    viewEditBtn.addEventListener("click", function() {
         loadTodoInfoIntoModal(uniqueId);
         infoModal.style.display = "block";
     });
@@ -151,6 +152,9 @@ function createTodoDomElement(todosContainer, uniqueId, title, description, dueD
     extraInfoDivElement.appendChild(document.createElement("p")).innerText = `${dueData}`;
     extraInfoDivElement.appendChild(document.createElement("p")).innerText = `${priority}`;
     const buttonsContainer = itemElement.appendChild(document.createElement("div")); 
+    const viewEditBtn = buttonsContainer.appendChild(document.createElement("button"));
+    viewEditBtn.classList.add("view-edit-btn");
+    viewEditBtn.innerText = "View / Edit";
     const removeBtn = buttonsContainer.appendChild(document.createElement("button"));
     removeBtn.classList.add("remove-btn");
     removeBtn.innerText = "Remove";
@@ -158,7 +162,6 @@ function createTodoDomElement(todosContainer, uniqueId, title, description, dueD
 };
 
 function removeBtnListener(uniqueId, itemElement, removeBtn) {
-    console.log(itemElement, removeBtn);
     removeBtn.addEventListener("click", function() {
         removeTodo(uniqueId);
     });
@@ -175,6 +178,12 @@ export function renderNewTodoItem(todoItemList) {
 
     createTodoDomElement(todosContainer, latestItemUniqueDomId, latestItem.title, latestItem.description, latestItem.dueData, latestItem.priority);
     provideModalForTodoItem(latestItemUniqueDomId);
+    console.log("triggered renderNewTodoItem function");
+    getUniqueIdForLatestItem(latestItemUniqueDomId);
+};
+
+export function updateCopyOfTodoList(todoItemList) {
+    latestTodoItemListCopy = [...todoItemList];
 };
 
 function removeCurrentlyDisplayedTodos() {
@@ -201,6 +210,7 @@ export function renderTodosForSelectedProject() {
 };
 
 export function renderProjects(todoItemList) {
+    refreshDomElementForProjects();
     const projectContainer = document.querySelector(".project-container");
     todoItemList.forEach(item => {
         const projectLabel = projectContainer.appendChild(document.createElement("div"));
@@ -208,6 +218,13 @@ export function renderProjects(todoItemList) {
         projectLabel.innerText = `${item.name}`;
     });
     setActiveProject();
+};
+
+function refreshDomElementForProjects() {
+    const projectLabels = document.querySelectorAll(".project-label");
+    projectLabels.forEach(project => {
+        project.remove();
+    });
 };
 
 function setActiveProject() {
@@ -232,6 +249,7 @@ function unsetUnactiveProjects() {
 };
 
 // when editing todo require a title
-// delete a todo +
-// localstorage
+// update localstorage when todo was edited
+// add option to add \ delete projects (when removing a project leave an empty element inside of the object not to fuck up unique id)
+// add button to view\edit todo details +
 // design
