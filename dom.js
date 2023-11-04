@@ -1,4 +1,4 @@
-import { findActiveProject, removeTodo, getUniqueIdForLatestItem } from "./index.js";
+import { findActiveProject, removeTodo, getUniqueIdForLatestItem, updateEditedTodoIntoLocalStorage } from "./index.js";
 import { destructureUniqueId } from "./utils.js"
 
 const openFormBtn = document.getElementById("openFormBtn");
@@ -53,7 +53,6 @@ function reRenderEditedElement(uniqueId, todoItem) {
     const dueData = dueDateAndPriority.querySelectorAll("p")[0];
     const priority = dueDateAndPriority.querySelectorAll("p")[1];
 
-    console.log(domTodoElement, todoItem);
     header.innerText = todoItem.title;
     description.innerText = todoItem.description;
     dueData.innerText = todoItem.dueData;
@@ -63,22 +62,26 @@ function reRenderEditedElement(uniqueId, todoItem) {
 function handleEditListeners(uniqueId, todoItem, modalHeader, modalDescription, modalDueData, lowPriority, middlePriority, highPriority) {
     modalHeader.addEventListener("input", function() {
         todoItem.title = modalHeader.innerText;
+        updateEditedTodoIntoLocalStorage(uniqueId, todoItem);
         reRenderEditedElement(uniqueId, todoItem);
     });
 
     modalDescription.addEventListener("input", function() {
         todoItem.description = modalDescription.innerText;
+        updateEditedTodoIntoLocalStorage(uniqueId, todoItem);
         reRenderEditedElement(uniqueId, todoItem);
     });
 
     modalDueData.addEventListener("change", function() {
         todoItem.dueData = modalDueData.value;
+        updateEditedTodoIntoLocalStorage(uniqueId, todoItem);
         reRenderEditedElement(uniqueId, todoItem);
     });
 
     lowPriority.addEventListener("change", function() {
         if (lowPriority.checked) {
             todoItem.priority = lowPriority.value;
+            updateEditedTodoIntoLocalStorage(uniqueId, todoItem);
             reRenderEditedElement(uniqueId, todoItem);
         };
     });
@@ -86,6 +89,7 @@ function handleEditListeners(uniqueId, todoItem, modalHeader, modalDescription, 
     middlePriority.addEventListener("change", function() {
         if (middlePriority.checked) {
             todoItem.priority = middlePriority.value;
+            updateEditedTodoIntoLocalStorage(uniqueId, todoItem);
             reRenderEditedElement(uniqueId, todoItem);
         };
     });
@@ -93,6 +97,7 @@ function handleEditListeners(uniqueId, todoItem, modalHeader, modalDescription, 
     highPriority.addEventListener("change", function() {
         if (highPriority.checked) {
             todoItem.priority = highPriority.value;
+            updateEditedTodoIntoLocalStorage(uniqueId, todoItem);
             reRenderEditedElement(uniqueId, todoItem);
         };
     });
@@ -178,7 +183,6 @@ export function renderNewTodoItem(todoItemList) {
 
     createTodoDomElement(todosContainer, latestItemUniqueDomId, latestItem.title, latestItem.description, latestItem.dueData, latestItem.priority);
     provideModalForTodoItem(latestItemUniqueDomId);
-    console.log("triggered renderNewTodoItem function");
     getUniqueIdForLatestItem(latestItemUniqueDomId);
 };
 
@@ -249,7 +253,6 @@ function unsetUnactiveProjects() {
 };
 
 // when editing todo require a title
-// update localstorage when todo was edited
+// update localstorage when todo was edited+
 // add option to add \ delete projects (when removing a project leave an empty element inside of the object not to fuck up unique id)
-// add button to view\edit todo details +
 // design

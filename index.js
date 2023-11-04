@@ -61,6 +61,19 @@ export function removeTodo(uniqueId) {
     removeTodoForLocalStorage(uniqueId);
 };
 
+export function updateEditedTodoIntoLocalStorage(uniqueId, todoItem) { 
+    const updateInLocalStorage = localStorageTodosClipboard.find(item => item.uniqueId === uniqueId);
+
+    if (updateInLocalStorage) {
+        updateInLocalStorage.title = todoItem.title;
+        updateInLocalStorage.description = todoItem.description;
+        updateInLocalStorage.dueData = todoItem.dueData;
+        updateInLocalStorage.priority = todoItem.priority;
+    };
+
+    saveDataToLocalStorage();
+};
+
 function removeTodoForLocalStorage(uniqueId) {
     const indexToRemove = localStorageTodosClipboard.findIndex(todo => todo.uniqueId === uniqueId);
 
