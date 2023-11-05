@@ -1,4 +1,4 @@
-import { findActiveProject, removeTodo, getUniqueIdForLatestItem, updateEditedTodoIntoLocalStorage } from "./index.js";
+import { findActiveProject, removeTodo, getUniqueIdForLatestItem, updateEditedTodoIntoLocalStorage, removeProject, addProject } from "./index.js";
 import { destructureUniqueId } from "./utils.js"
 
 const openFormBtn = document.getElementById("openFormBtn");
@@ -7,6 +7,23 @@ openFormBtn.addEventListener("click", function() {
     formContainer.style.display = "block";
 });
 
+const openInputToAddProject = document.getElementById("addProjectBtn");
+openInputToAddProject.addEventListener("click", function() {
+    const addProjectInputs = document.querySelector(".add-project-inputs");
+    addProjectInputs.style.display = "block";
+});
+
+const closeAddProjectInput = document.getElementById("cancelProject");
+closeAddProjectInput.addEventListener("click", function() {
+    const addProjectInputs = document.querySelector(".add-project-inputs");
+    addProjectInputs.style.display = "none";
+});
+
+const addNewProject = document.getElementById("addProject");
+addNewProject.addEventListener("click", function() {
+    const projectName = document.getElementById("projectName");
+    addProject(projectName.value);
+});
 
 
 // MODALS =====>
@@ -201,7 +218,10 @@ function removeCurrentlyDisplayedTodos() {
 export function renderTodosForSelectedProject() {
     removeCurrentlyDisplayedTodos();
     const activeProjectIndex = findActiveProject();
+    console.log(activeProjectIndex);
+    console.log(latestTodoItemListCopy);
     const activeProjectTodos = latestTodoItemListCopy[activeProjectIndex].tasks;
+    console.log(latestTodoItemListCopy[activeProjectIndex]);
     const todosContainer = document.querySelector(".todos-container");
  
     if (activeProjectTodos.length > 0) {
@@ -216,12 +236,26 @@ export function renderTodosForSelectedProject() {
 export function renderProjects(todoItemList) {
     refreshDomElementForProjects();
     const projectContainer = document.querySelector(".project-container");
-    todoItemList.forEach(item => {
-        const projectLabel = projectContainer.appendChild(document.createElement("div"));
-        projectLabel.classList.add("project-label");
-        projectLabel.innerText = `${item.name}`;
+    todoItemList.forEach((item, index) => {
+        if (item.name) {
+            const projectLabel = projectContainer.appendChild(document.createElement("div"));
+            projectLabel.classList.add("project-label");
+            projectLabel.id = `Project-${index}`;
+            const title = projectLabel.appendChild(document.createElement("p"));
+            title.innerText = `${item.name}`;
+            const btnsContainer = projectLabel.appendChild(document.createElement("div"));
+            const deleteProjectBtn = btnsContainer.appendChild(document.createElement("button"));
+            deleteProjectBtn.innerText = "Delete";
+            deleteProjectBtnHandler(item, index, deleteProjectBtn);
+        };
     });
     setActiveProject();
+};
+
+function deleteProjectBtnHandler(item, index, deleteProjectBtn) {
+    deleteProjectBtn.addEventListener("click", function() {
+        removeProject(item, index);
+    });
 };
 
 function refreshDomElementForProjects() {
@@ -253,6 +287,4 @@ function unsetUnactiveProjects() {
 };
 
 // when editing todo require a title
-// update localstorage when todo was edited+
-// add option to add \ delete projects (when removing a project leave an empty element inside of the object not to fuck up unique id)
 // design

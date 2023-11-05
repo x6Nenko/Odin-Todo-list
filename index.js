@@ -21,6 +21,12 @@ class TodoItem {
 
 const todoItemList = [{name: "default project", tasks: []}, {name: "Another project", tasks: []}, {name: "Superior project", tasks: []}];
 const localStorageTodosClipboard = [];
+const unpackedProjectsLocalStorage = localStorage.getItem("localStorageProjectsClipboard");
+const projects = JSON.parse(unpackedProjectsLocalStorage);
+let localStorageProjectsClipboard = [{name: "default project", tasks: []}, {name: "Another project", tasks: []}, {name: "Superior project", tasks: []}];
+if (projects) {
+    localStorageProjectsClipboard = projects;
+};
 
 const form = document.getElementById("myForm");
 form.addEventListener("submit", function(e) {
@@ -45,7 +51,8 @@ export function findActiveProject() {
     let activeProjectIndex;
     currentProjects.forEach((project, index) => {
         if (project.classList.contains('active')) {
-            activeProjectIndex = index;
+            const destructuredId = destructureUniqueId(project.id);
+            activeProjectIndex = destructuredId[1];
         }
     });
     return activeProjectIndex;
@@ -56,7 +63,6 @@ export function removeTodo(uniqueId) {
     const projectId = destructuredId[0];
     const todoItemId = destructuredId[1];
     todoItemList[projectId].tasks.splice(todoItemId, 1);
-    console.log(uniqueId, todoItemList[projectId].tasks);
     renderTodosForSelectedProject();
     removeTodoForLocalStorage(uniqueId);
 };
@@ -82,7 +88,7 @@ function removeTodoForLocalStorage(uniqueId) {
     } else if (indexToRemove !== -1 && localStorageTodosClipboard.length - 1 !== indexToRemove) {
         const currentUniqueId = localStorageTodosClipboard[indexToRemove].uniqueId;
         localStorageTodosClipboard.splice(indexToRemove, 1);
-        const currentIdOfNextItem = localStorageTodosClipboard[indexToRemove].uniqueId
+        // const currentIdOfNextItem = localStorageTodosClipboard[indexToRemove].uniqueId
         localStorageTodosClipboard[indexToRemove].uniqueId = currentUniqueId;
     };
 
@@ -90,13 +96,33 @@ function removeTodoForLocalStorage(uniqueId) {
 };
 
 function saveDataToLocalStorage() {
-    const data = JSON.stringify(localStorageTodosClipboard);
-    localStorage.setItem("localStorageTodosClipboard", data);
+    const todosData = JSON.stringify(localStorageTodosClipboard);
+    const projectsData = JSON.stringify(localStorageProjectsClipboard);
+    localStorage.setItem("localStorageTodosClipboard", todosData);
+    localStorage.setItem("localStorageProjectsClipboard", projectsData);
 };
 
 function takeDataFromLocalStorage() {
-    const unpackedLocalStorage = localStorage.getItem("localStorageTodosClipboard");
-    const todos = JSON.parse(unpackedLocalStorage);
+    const unpackedTodosLocalStorage = localStorage.getItem("localStorageTodosClipboard");
+    const todos = JSON.parse(unpackedTodosLocalStorage);
+
+    const unpackedProjectsLocalStorage = localStorage.getItem("localStorageProjectsClipboard");
+    const projects = JSON.parse(unpackedProjectsLocalStorage);
+
+    if (projects) {
+        todoItemList.splice(0, todoItemList.length);
+        projects.forEach(project => {
+            todoItemList.push(project);
+        });
+
+        // localStorageProjectsClipboard.splice(0, localStorageProjectsClipboard.length);
+        // projects.forEach(project => {
+        //     localStorageProjectsClipboard.push(project);
+        // });
+
+        // copyProjectsToLocalStorageArr();
+    };
+
     if (todos) {
         renderProjects(todoItemList);
 
@@ -114,6 +140,31 @@ function takeDataFromLocalStorage() {
         updateCopyOfTodoList(todoItemList);
         renderTodosForSelectedProject();
     };
+};
+
+function copyProjectsToLocalStorageArr() {
+    localStorageProjectsClipboard.splice(0, localStorageProjectsClipboard.length);
+    todoItemList.forEach(project => {
+        localStorageProjectsClipboard.push(project);
+    });
+};
+
+export function addProject(projectName) {
+    todoItemList.push({name: projectName, tasks: []});
+    localStorageProjectsClipboard.push({name: projectName, tasks: []});
+
+    updateCopyOfTodoList(todoItemList);
+    renderProjects(todoItemList);
+    saveDataToLocalStorage();
+};
+
+export function removeProject(item, index) {
+    todoItemList[index] = {name: null};
+    localStorageProjectsClipboard[index] = {name: null};
+
+    updateCopyOfTodoList(todoItemList);
+    renderProjects(todoItemList);
+    saveDataToLocalStorage();
 };
 
 export function getUniqueIdForLatestItem(uniqueId) {
@@ -205,6 +256,5 @@ initialTodosBtn.addEventListener("click", function() {
     initialTodos();
 });
 
-// in object > this ?
 renderProjects(todoItemList);
 takeDataFromLocalStorage();
