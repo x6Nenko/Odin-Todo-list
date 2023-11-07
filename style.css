@@ -1,3 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: rgb(24, 24, 24);
+}
+
+header {
+    padding: 20px;
+    background-color: #e4e4e4;
+}
+
+.logo .first-word {
+    letter-spacing: -5.6px;
+}
+
+.logo .first-letter {
+    font-size: 48px;
+}
+
+.logo .second-word {
+    letter-spacing: -3.68px;
+    margin-left: 10px;
+    color: #929292;
+}
+
+.logo .letter-i {
+    color: rgb(24, 24, 24);
+}
+
+.logo .letter-t {
+    font-size: 48px;
+}
+
+main {
+    display: flex;
+}
+
+button {
+    border-radius: 5px;
+    padding: 5px 15px;
+    border: none;
+}
+
+.open-form-Btns {
+    padding: 10px 20px;
+    background-color: #d4d4d4;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.btn-wrapper {
+    padding: 20px;
+    width: 100%;
+}
+
+/* =========== Projects container =========== */
+
+#addProjectBtn {
+    width: 100%;
+}
+
+.delete-project-btn {
+    padding: 6px 20px;
+    border-radius: 0px 100px 100px 0px;
+    margin-left: -20px;
+    margin-top: 10px;
+}
+
+.project-container {
+    width: 25%;
+    max-width: 250px;
+    border-right: 1px solid rgb(175, 175, 175);
+}
+
+.add-project-inputs {
+    display: none;
+}
+
+.project-label {
+    padding: 10px 20px;
+}
+
+.add-project-inputs {
+    padding: 0 20px;
+}
+
+.add-project-inputs .btn-wrapper {
+    text-align: center;
+}
+
+.add-project-inputs input {
+    padding: 10px;
+}
+
+#projectName {
+    width: 100%;
+}
+
+/* =========== Todos container =========== */
+
+#openFormBtn {
+    width: 209px;
+}
+
 .form-container {
     display: none;
     margin: 40px 0;
@@ -7,8 +116,8 @@
     border-bottom: 1px solid black;
 }
 
-.project-container {
-    margin: 40px 0;
+.todos-container {
+    width: 100%;
 }
 
 .active {
@@ -35,8 +144,4 @@
     padding: 20px 100px;
     margin: auto;
     width: 50%;
-}
-
-.add-project-inputs {
-    display: none;
 }

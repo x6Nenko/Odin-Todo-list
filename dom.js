@@ -245,7 +245,8 @@ export function renderProjects(todoItemList) {
             title.innerText = `${item.name}`;
             const btnsContainer = projectLabel.appendChild(document.createElement("div"));
             const deleteProjectBtn = btnsContainer.appendChild(document.createElement("button"));
-            deleteProjectBtn.innerText = "Delete";
+            deleteProjectBtn.classList.add("delete-project-btn");
+            deleteProjectBtn.innerHTML = "Remove";
             deleteProjectBtnHandler(item, index, deleteProjectBtn);
         };
     });

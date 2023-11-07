@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Todo list</h1>
-    <button id="openFormBtn">Add an item</button>
-    <button id="initialTodosBtn">Add initial Todos</button>
+    <header>
+      <h1 class="logo"><span class="first-word"><span class="first-letter">T</span>odo</span> <span class="second-word">l<span class="letter-i">i</span>s<span class="letter-t">T</span></h1>
+    </header>
+    
+    <!-- <button id="initialTodosBtn">Add initial Todos</button> -->
 
     <div class="form-container">
         <form action="" id="myForm">
@@ -51,49 +57,58 @@
         </form>
     </div>
 
-    <div class="project-container">
-      <button id="addProjectBtn">Add project</button>
-      <div class="add-project-inputs">
-          <label for="projectName"></label>
-          <input type="text" name="projectName" id="projectName">
-
-          <button id="addProject">Add</button>
-          <button id="cancelProject">Cancel</button>
-      </div>
-    </div>
-
-    <div class="todos-container">
-        <div class="info-modal">
-            <article>
-                <div>
-                    <h2 class="modal-header" contenteditable="true"></h2>
-                    <p class="modal-description" contenteditable="true"></p>
-                </div>
-                <div>
-                    <input type="date" id="editDueData" name="editDueData" class="modal-dueData">
-                    <div>
-                        <div>
-                            <div>
-                              <input type="radio" id="editLow" name="editPriority" value="low"/>
-                              <label for="editLow">Low</label>
-                            </div>
-                          
-                            <div>
-                              <input type="radio" id="editMiddle" name="editPriority" value="middle"/>
-                              <label for="editMiddle">Middle</label>
-                            </div>
-                          
-                            <div>
-                              <input type="radio" id="editHigh" name="editPriority" value="high"/>
-                              <label for="editHigh">High</label>
-                            </div>
-                          </div>
-                    </div>
-                </div>
-                <span id="closeModalBtn">&times;</span>
-            </article>
+    <main>
+      <div class="project-container">
+        <div class="btn-wrapper">
+          <button id="addProjectBtn" class="open-form-Btns">Add project</button>
         </div>
-    </div>
+        <div class="add-project-inputs">
+            <label for="projectName"></label>
+            <input type="text" name="projectName" id="projectName">
+
+            <div class="btn-wrapper">
+              <button id="addProject">Add</button>
+              <button id="cancelProject">Cancel</button>
+            </div>
+        </div>
+      </div>
+
+      <div class="todos-container">
+        <div class="btn-wrapper">
+          <button id="openFormBtn" class="open-form-Btns">Add todo</button>
+        </div>
+          <div class="info-modal">
+              <article>
+                  <div>
+                      <h2 class="modal-header" contenteditable="true"></h2>
+                      <p class="modal-description" contenteditable="true"></p>
+                  </div>
+                  <div>
+                      <input type="date" id="editDueData" name="editDueData" class="modal-dueData">
+                      <div>
+                          <div>
+                              <div>
+                                <input type="radio" id="editLow" name="editPriority" value="low"/>
+                                <label for="editLow">Low</label>
+                              </div>
+                            
+                              <div>
+                                <input type="radio" id="editMiddle" name="editPriority" value="middle"/>
+                                <label for="editMiddle">Middle</label>
+                              </div>
+                            
+                              <div>
+                                <input type="radio" id="editHigh" name="editPriority" value="high"/>
+                                <label for="editHigh">High</label>
+                              </div>
+                            </div>
+                      </div>
+                  </div>
+                  <span id="closeModalBtn">&times;</span>
+              </article>
+          </div>
+      </div>
+    </main>
 
     <script type="module" src="index.js"></script>
     <script type="module" src="dom.js"></script>

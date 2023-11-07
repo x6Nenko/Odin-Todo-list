@@ -251,10 +251,10 @@ function initialTodos() {
     renderTodosForSelectedProject();
 };
 
-const initialTodosBtn = document.getElementById("initialTodosBtn");
-initialTodosBtn.addEventListener("click", function() {
-    initialTodos();
-});
+// const initialTodosBtn = document.getElementById("initialTodosBtn");
+// initialTodosBtn.addEventListener("click", function() {
+//     initialTodos();
+// });
 
 renderProjects(todoItemList);
 takeDataFromLocalStorage();
