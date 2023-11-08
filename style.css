@@ -10,6 +10,31 @@ body {
     overflow-x: hidden;
 }
 
+main {
+    display: flex;
+}
+
+button {
+    border-radius: 5px;
+    padding: 5px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.open-form-Btns {
+    padding: 10px 20px;
+    background-color: #d4d4d4;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.btn-wrapper {
+    padding: 20px;
+    width: 100%;
+}
+
+/* =========== Logo and socials =========== */
+
 .logo {
     text-align: center;
     margin-top: 20px;
@@ -46,29 +71,6 @@ body {
 
 .socials a {
     color: rgb(24, 24, 24);
-}
-
-main {
-    display: flex;
-}
-
-button {
-    border-radius: 5px;
-    padding: 5px 15px;
-    border: none;
-    cursor: pointer;
-}
-
-.open-form-Btns {
-    padding: 10px 20px;
-    background-color: #d4d4d4;
-    text-transform: uppercase;
-    font-weight: 800;
-}
-
-.btn-wrapper {
-    padding: 20px;
-    width: 100%;
 }
 
 /* =========== Projects container =========== */

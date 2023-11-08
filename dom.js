@@ -224,10 +224,7 @@ function removeCurrentlyDisplayedTodos() {
 export function renderTodosForSelectedProject() {
     removeCurrentlyDisplayedTodos();
     const activeProjectIndex = findActiveProject();
-    console.log(activeProjectIndex);
-    console.log(latestTodoItemListCopy);
     const activeProjectTodos = latestTodoItemListCopy[activeProjectIndex].tasks;
-    console.log(latestTodoItemListCopy[activeProjectIndex]);
     const todosContainer = document.querySelector(".todos-container");
  
     if (activeProjectTodos.length > 0) {
