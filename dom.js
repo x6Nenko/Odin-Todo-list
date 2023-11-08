@@ -7,6 +7,12 @@ openFormBtn.addEventListener("click", function() {
     formContainer.style.display = "block";
 });
 
+const closeFormBtn = document.getElementById("cancelTodo");
+closeFormBtn.addEventListener("click", function() {
+    const formContainer = document.querySelector(".form-container");
+    formContainer.style.display = "none";
+});
+
 const openInputToAddProject = document.getElementById("addProjectBtn");
 openInputToAddProject.addEventListener("click", function() {
     const addProjectInputs = document.querySelector(".add-project-inputs");

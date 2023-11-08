@@ -11,54 +11,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-      <h1 class="logo"><span class="first-word"><span class="first-letter">T</span>odo</span> <span class="second-word">l<span class="letter-i">i</span>s<span class="letter-t">T</span></h1>
-    </header>
-    
     <!-- <button id="initialTodosBtn">Add initial Todos</button> -->
-
-    <div class="form-container">
-        <form action="" id="myForm">
-            <div class="input-container">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
-            </div>
-
-            <div class="input-container">
-                <label for="description">Description:</label>
-                <input type="text" id="description" name="description">
-            </div>
-
-            <div class="input-container">
-                <label for="dueData">Due Data:</label>
-                <input type="date" id="dueData" name="dueData">
-            </div>
-
-            <div class="input-container">
-                <label for="priority" >Priority:</label>
-                <div>
-                    <div>
-                      <input type="radio" id="low" name="priority" value="low" />
-                      <label for="low">Low</label>
-                    </div>
-                  
-                    <div>
-                      <input type="radio" id="middle" name="priority" value="middle" checked />
-                      <label for="middle">Middle</label>
-                    </div>
-                  
-                    <div>
-                      <input type="radio" id="high" name="priority" value="high" />
-                      <label for="high">High</label>
-                    </div>
-                  </div>
-            </div>
-            <button type="submit">Add</button>
-        </form>
-    </div>
 
     <main>
       <div class="project-container">
+        <div class="socials">
+          <a href="https://x6nenko.github.io/Odin-Todo-list/" target="_blank"><i class="fa-brands fa-github github-logo"></i></a>
+        </div>
+        <h1 class="logo"><span class="first-word"><span class="first-letter">T</span>odo</span> <span class="second-word">l<span class="letter-i">i</span>s<span class="letter-t">T</span></h1>
         <div class="btn-wrapper">
           <button id="addProjectBtn" class="open-form-Btns">Add project</button>
         </div>
@@ -77,16 +37,60 @@
         <div class="btn-wrapper">
           <button id="openFormBtn" class="open-form-Btns">Add todo</button>
         </div>
+
+        <div class="form-container">
+          <form action="" id="myForm">
+              <div class="input-container">
+                  <label for="title">Title:</label>
+                  <input type="text" id="title" name="title" required>
+              </div>
+  
+              <div class="input-container">
+                  <label for="description">Description:</label>
+                  <input type="text" id="description" name="description">
+              </div>
+  
+              <div class="input-container">
+                  <label for="dueData">Due Data:</label>
+                  <input type="date" id="dueData" name="dueData">
+              </div>
+  
+              <div class="input-container">
+                  <label for="priority" >Priority:</label>
+                  <div class="priority-options">
+                      <div>
+                        <input type="radio" id="low" name="priority" value="low" />
+                        <label for="low">Low</label>
+                      </div>
+                    
+                      <div>
+                        <input type="radio" id="middle" name="priority" value="middle" checked />
+                        <label for="middle">Middle</label>
+                      </div>
+                    
+                      <div>
+                        <input type="radio" id="high" name="priority" value="high" />
+                        <label for="high">High</label>
+                      </div>
+                    </div>
+              </div>
+              <div class="form-btn-wrapper">
+                <button type="submit">Add</button>
+                <button type="reset" id="cancelTodo">Cancel</button>
+              </div>
+          </form>
+        </div>
+
           <div class="info-modal">
               <article>
-                  <div>
+                  <div class="text-fields">
                       <h2 class="modal-header" contenteditable="true"></h2>
                       <p class="modal-description" contenteditable="true"></p>
                   </div>
                   <div>
                       <input type="date" id="editDueData" name="editDueData" class="modal-dueData">
-                      <div>
-                          <div>
+                      <div class="priority-container">
+                          <div class="priority-options">
                               <div>
                                 <input type="radio" id="editLow" name="editPriority" value="low"/>
                                 <label for="editLow">Low</label>
