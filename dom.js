@@ -289,6 +289,3 @@ function unsetUnactiveProjects() {
         label.classList.remove("active");
     });
 };
-
-// when editing todo require a title
-// design

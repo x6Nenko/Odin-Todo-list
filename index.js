@@ -114,13 +114,6 @@ function takeDataFromLocalStorage() {
         projects.forEach(project => {
             todoItemList.push(project);
         });
-
-        // localStorageProjectsClipboard.splice(0, localStorageProjectsClipboard.length);
-        // projects.forEach(project => {
-        //     localStorageProjectsClipboard.push(project);
-        // });
-
-        // copyProjectsToLocalStorageArr();
     };
 
     if (todos) {
@@ -176,85 +169,6 @@ function setUniqueIdForLatestItem(uniqueId) {
     const lastTodoItem = localStorageTodosClipboard[lastTodoIndex];
     lastTodoItem.uniqueId = uniqueId;
 };
-
-function initialTodos() {
-    const todos = [
-    {
-        title: "Random Title 1",
-        description: "Some random description",
-        dueData: "2023-10-28",
-        priority: "middle",
-        projectIndex: 0
-    },
-    {
-        title: "Random Title 2",
-        description: "Some random description",
-        dueData: "2023-10-28",
-        priority: "middle",
-        projectIndex: 0
-    },
-    {
-        title: "Random Title 3",
-        description: "Some random description",
-        dueData: "2023-10-28",
-        priority: "middle",
-        projectIndex: 0
-    },
-    // {
-    //     title: "Random Title",
-    //     description: "Some random description",
-    //     dueData: "2023-10-28",
-    //     priority: "middle",
-    //     projectIndex: 1
-    // },
-    // {
-    //     title: "Random Title",
-    //     description: "Some random description",
-    //     dueData: "2023-10-28",
-    //     priority: "middle",
-    //     projectIndex: 2
-    // },
-    // {
-    //     title: "Random Title",
-    //     description: "Some random description",
-    //     dueData: "2023-10-28",
-    //     priority: "middle",
-    //     projectIndex: 2
-    // },
-    // {
-    //     title: "Random Title",
-    //     description: "Some random description",
-    //     dueData: "2023-10-28",
-    //     priority: "middle",
-    //     projectIndex: 2
-    // },
-    // {
-    //     title: "Random Title",
-    //     description: "Some random description",
-    //     dueData: "2023-10-28",
-    //     priority: "middle",
-    //     projectIndex: 2
-    // }
-    ];
-
-    todos.forEach(todo => {
-        localStorageTodosClipboard.push({
-            title: todo.title,
-            description: todo.description,
-            dueData: todo.dueData,
-            priority: todo.priority,
-            projectIndex: todo.projectIndex
-          });
-        new TodoItem(todo.title, todo.description, todo.dueData, todo.priority, todo.projectIndex)
-    });
-
-    renderTodosForSelectedProject();
-};
-
-// const initialTodosBtn = document.getElementById("initialTodosBtn");
-// initialTodosBtn.addEventListener("click", function() {
-//     initialTodos();
-// });
 
 renderProjects(todoItemList);
 takeDataFromLocalStorage();
